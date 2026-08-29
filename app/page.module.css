@@ -55,7 +55,7 @@
   color: var(--text-secondary);
 }
 
-.intro a {
+.intro a { 
   font-weight: 500;
   color: var(--text-primary);
 }

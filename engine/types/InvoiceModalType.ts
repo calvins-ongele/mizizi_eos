@@ -1,0 +1,4 @@
+
+type InvoiceModalType = {
+    id: string;
+};
