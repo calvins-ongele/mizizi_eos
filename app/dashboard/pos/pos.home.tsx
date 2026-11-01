@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import PayModal from "../dashboardmodals/pay.dashboard.modal";
 import useSWR from "swr";
 import Loading from "../../components/Loading";
-// import ReceiptModal from "./dashboardmodals/receipt.dashboard.modal";   
+import ReceiptModal from ".././dashboardmodals/receipt.dashboard.modal";   
 // import { setTimeout } from "timers/promises";
 
 type ProductDB = {
@@ -34,7 +34,7 @@ export default function POSDashboardPage() {
  
   const [openCustomerModal, setOpenCustomerModal] = useState<InvoiceModalType | null>(null);
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
-  //const [openReceiptModal, setOpenReceiptModal] = useState<string | null>(null);
+  const [openReceiptModal, setOpenReceiptModal] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(2);
   const [barcode, setBarcode] = useState("");
@@ -96,7 +96,9 @@ export default function POSDashboardPage() {
     }
  
   };
-  const handlePayDoneSave = async (url:string) => {
+  
+  const handlePayDoneSave = async (url:string) => {  
+    if (url !== "") {setOpenReceiptModal(url)} 
     //setOpenReceiptModal(url);  
     setOpenPayModal(null);
     setCart([]);
@@ -637,7 +639,9 @@ export default function POSDashboardPage() {
         <div className="d-grid gap-1" style={{ width: 240 }}>
           <button className="action-btn btn-success" onClick={()=>saveAndPay()}><i className="bi bi-cash"></i> Pay</button>
           {/* <button className="action-btn">🔍 Product Search</button> */}
-          <button className="action-btn" onClick={()=>printInvoice()}><i className="bi bi-printer"></i> Print Invoice</button>
+          <button className="action-btn" onClick={
+            ()=> printInvoice()
+            }><i className="bi bi-printer"></i> Print Invoice</button>
           <button className="action-btn"><i className="bi bi-tag"></i> Price Change</button>
           <button className="action-btn"><i className="bi bi-percent text"></i> Discount</button>
           <button className="action-btn" onClick={suspendSale} ><i className="bi bi-pause"></i> Suspend Sale</button>
@@ -671,12 +675,12 @@ export default function POSDashboardPage() {
             onSave={handlePayDoneSave} 
             />
         )}
-        {/* {openReceiptModal && (
+         {openReceiptModal && (
             <ReceiptModal
             enquiry={openReceiptModal}
             onClose={() => setOpenReceiptModal(null)} 
             />
-        )} */}
+        )} 
  
     </div>
   );

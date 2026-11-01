@@ -145,7 +145,7 @@ export default function SalesPage() {
                   <div className="card-header d-flex justify-content-between align-items-center">
                     <h5 className="card-title">Sales List</h5>
                     <div>
-                      <a href="/dashboard" className="btn btn-primary">
+                      <a href="/dashboard/pos" className="btn btn-primary">
                         <i className="bi bi-plus-circle me-1"></i>Create a Sale
                       </a>
                     </div>
@@ -221,7 +221,10 @@ export default function SalesPage() {
                                                                
                                   <tr key={row.uuid || row.id}>
                                     
-                                    <td><a href="#invoice" className="text-primary fw-semibold">#{row.receipt_no}</a></td>
+                                    <td> 
+                                      <a href={ row.status=="pending" ? `/dashboard/pos?uid=${row.uuid}` :  `/dashboard/sales/${row.receipt_no}`} className="text-primary fw-semibold">#{row.receipt_no}</a>
+                                      
+                                    </td>
                                     <td>
                                       <div className="d-flex align-items-center"> 
                                         <span>{row.customer_name}</span>
@@ -240,7 +243,7 @@ export default function SalesPage() {
                                         </a>
                                           {
                                             row.status=="pending" && (
-                                              <a href={`/dashboard?uid=`+ row.uuid } className="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" aria-label="View profile" data-bs-original-title="Continue to Checkout">
+                                              <a href={`/dashboard/pos?uid=`+ row.uuid } className="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" aria-label="View profile" data-bs-original-title="Continue to Checkout">
                                                 Continue
                                               </a>
                                             )

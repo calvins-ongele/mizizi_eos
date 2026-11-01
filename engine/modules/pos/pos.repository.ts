@@ -1,21 +1,17 @@
 import { fail, ok, pdf } from "@/engine/core/http/responses";
 import { BaseModel } from "@/engine/lib/db/BaseModel";
 import { db } from "@/engine/lib/db/mysql.client";  
-//import { receiptPdfHtml } from "@/engine/lib/other-templates/receipt";
+import { receiptPdfHtml } from "@/engine/lib/other-templates/receipt";
 import { uuid, rand } from "@/engine/utils/crypto";
 import { formatDateShort, nowUtc, receiptDate } from "@/engine/utils/dates";
-//import puppeteer from "puppeteer"; 
+import puppeteer from "puppeteer"; 
 //import test from "node:test";
 
 import { DateFilterType, SalesFilterParams, SalesChartData } from '@/engine/types/sales';
 import { Products } from "../products/products.types";
 import { contentRepository } from "../content/content.repository";
-//import { ReceiptPrinter } from "@/engine/lib/receipt-printer"; 
-export class ReceiptPrinter {
-     printLabel(data:any) {}
-     printBarcode(data:any) {}
-     print(data:any) {}
-}
+import { ReceiptPrinter } from "@/engine/lib/receipt-printer"; 
+ 
 
 class PosRepository extends BaseModel<any> {
   protected table = "pos";
@@ -264,28 +260,19 @@ class PosRepository extends BaseModel<any> {
     db.update("sales", {status:'paid'}, "uuid = ?", [data.uid]);
 
     const tax = (data.cartValue||1) * 16 / 116; // 0.16 * (data.cartValue||0);
-    // let html = receiptPdfHtml().replace("{{body}}", receiptBody).replaceAll("{{invoice_no}}", data.receipt_no )
-    // .replaceAll("{{customer_name}}", data.customer_name||'Customer')
-    // .replace("{{customer_address}}", '')
-    // .replace("{{customer_phone}}", data.customer_phone||'')
-    // .replace("{{due_date}}", formatDateShort(nowUtc()))
-    // .replace("{{payment_status}}", "Paid")
-    // .replace("{{comentary_notes}}", ``)
-    // .replace("{{subtotal}}", String(data.cartValue||0) )
-    // .replace("{{grandtotal}}",  String(data.cartValue||0) )
-    // .replace("{{company_name}}", company.institution_name||"")
-    // .replace("{{tax}}", tax.toFixed(2) )
-    // .replace("{{served_by}}", `${cart?.user_name||''}` );
-
-    // const browser = await puppeteer.launch();
-    // const page = await browser.newPage(); 
-    // await page.setContent(html); 
-    // const pdfBuffer = await page.pdf({
-    //   format: 'A4',
-    //   printBackground: true
-    // });
-
-    // await browser.close(); 
+    let html = receiptPdfHtml().replace("{{body}}", receiptBody).replaceAll("{{invoice_no}}", data.receipt_no )
+    .replaceAll("{{customer_name}}", data.customer_name||'Customer')
+    .replace("{{customer_address}}", '')
+    .replace("{{customer_phone}}", data.customer_phone||'')
+    .replace("{{due_date}}", formatDateShort(nowUtc()))
+    .replace("{{payment_status}}", "Paid")
+    .replace("{{comentary_notes}}", ``)
+    .replace("{{subtotal}}", String(data.cartValue||0) )
+    .replace("{{grandtotal}}",  String(data.cartValue||0) )
+    .replace("{{company_name}}", company.institution_name||"")
+    .replace("{{tax}}", tax.toFixed(2) )
+    .replace("{{served_by}}", `${cart?.user_name||''}` ); 
+    
 
     
     const sendToPrinter = {
@@ -308,12 +295,24 @@ class PosRepository extends BaseModel<any> {
       
     };
     try {
-    const receiptPrinter = new ReceiptPrinter();
-    
-    receiptPrinter.print(sendToPrinter);
-    return "OK";
-    } catch {
-      return "Error";
+      const receiptPrinter = new ReceiptPrinter();  
+      const printerResult = await receiptPrinter.print(sendToPrinter);
+      return ok(printerResult);
+    } catch(e) {
+      try {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage(); 
+        await page.setContent(html); 
+        const pdfBuffer = await page.pdf({
+          format: 'A4',
+          printBackground: true
+        }); 
+        await browser.close(); 
+        return pdf(pdfBuffer, "Receipt");
+      } catch(error) {
+        return fail(error);
+      } 
+      return fail(e);
     }
 
 

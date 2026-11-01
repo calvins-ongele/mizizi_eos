@@ -58,7 +58,7 @@ export default function CustomersPage() {
                 <h3 className="mb-1 fw-bold">Customers</h3>
                 <nav aria-label="breadcrumb">
                   <ol className="breadcrumb m-0">
-                    <li className="breadcrumb-item"><a href="/dashboard">Home</a></li> 
+                    <li className="breadcrumb-item"><a href="/dashboard/pos">Home</a></li> 
                     <li className="breadcrumb-item active" aria-current="page">Customers List</li>
                   </ol>
                 </nav>
@@ -121,7 +121,7 @@ export default function CustomersPage() {
                             <td>{row.paused_by || "N/A"}</td>
                               <td>
                                 <div className="btn-group">
-                                  <a href={`/dashboard/?uid=${row.uid}`} className="btn btn-sm btn-outline-primary">
+                                  <a href={`/dashboard/pos/?uid=${row.uid}`} className="btn btn-sm btn-outline-primary">
                                     Continue
                                   </a>
                                  

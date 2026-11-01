@@ -1,6 +1,9 @@
 export class ReceiptPrinter {
     printLabel(data:any) {}
     printBarcode(data:any) {}
+    async print(data:any) {
+        throw new Error("Printer functionality is not implemented. Please ensure that the 'node-thermal-printer' package is installed and properly configured.");
+    }
 }
 // import { ThermalPrinter, PrinterTypes } from "node-thermal-printer";
 // import * as nodePrinter from "@thiagoelg/node-printer";
@@ -177,6 +180,11 @@ export class ReceiptPrinter {
 
 //     async print(data:any){
 
+//         // const isConnected = await this.printer.isPrinterConnected();
+//         // if (!isConnected) {
+//         //     throw new Error("Printer is not connected or offline!");
+//         // }
+
 //         this.header(data);
 
 //         this.customer(data);
@@ -190,7 +198,10 @@ export class ReceiptPrinter {
 //         this.printer.openCashDrawer();
 //         this.printer.cut();
 
-//         await this.printer.execute();
+//         const printerResult = await this.printer.execute();
+//         // if (typeof printerResult === "string" && printerResult.includes("Error") ) {
+//         //     throw new Error(`Printer error: ${printerResult}`);
+//         // }
 
 //     }
 

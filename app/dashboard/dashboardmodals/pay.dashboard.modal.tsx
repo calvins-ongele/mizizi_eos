@@ -94,7 +94,7 @@ export default function PayModal({ enquiry, onClose, onSave }: InvoiceModalProps
               
               if (result.error == 'false') {
                 // payment done and confirmed
-                onSave("url");  
+                onSave("");  
                 activeModal();
                 setSuccess("Sale completed successfully.");
                 //print receipt
@@ -162,17 +162,17 @@ export default function PayModal({ enquiry, onClose, onSave }: InvoiceModalProps
     const type = response.headers.get("X-Response-Type")||"";
     //const type = response.headers.get("content-type") || "";
     //if (type.includes("application/pdf")) {
-    if (type === 'pdf') { 
+    if (type === 'pdf') {  
       const blob = await response.blob(); 
       const url = URL.createObjectURL(blob);
       setSuccess("Sale completed successfully."); 
       onSave(url);  
-      activeModal();
+      activeModal(); 
       return;
-    }
+    }  
     const results = await response.json();
     if (results.success) {
-      onSave("url");  
+      onSave("");  
       activeModal();
       setSuccess("Sale completed successfully.");
       return;

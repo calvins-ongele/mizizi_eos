@@ -118,7 +118,7 @@ export default function CreateProductNamePage() {
         selling_price: "", 
         productQuantity: 0,
         productid: '',
-        supplier_id:0,
+        supplier_id:form.supplier_id || 0,
         quantity:0,
       });
       setBarcode("");
@@ -351,9 +351,9 @@ export default function CreateProductNamePage() {
                 <div className="mb-3 col-md-6">
                   <label className="form-label">Quantity</label>
                   <input
-                  name="quantity"
+                    name="quantity"
                     className="form-control"
-                    defaultValue={form.productQuantity ?? 0}
+                    value={form.productQuantity ?? 0}
                     onChange={(e) => update("productQuantity", Number(e.target.value))}
                   />
                 </div> 
