@@ -215,7 +215,7 @@ export const posController = {
             customer_name:form.customer_name||'',
             cash_amount: form.cash_amount || '',
         });
-        console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", feedback);
+       
        return feedback ;
        return ok("succuess");
     },

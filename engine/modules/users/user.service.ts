@@ -32,13 +32,14 @@ export const userService = {
   async login(data: { email: string; password: string }) { 
     
     const user = await userRepository.findByEmail(data.email); 
+   
     if (!user) throw new AuthError("Invalid credentials");
 
     const ok = await verifyPassword(data.password, user.password);
     if (!ok) throw new AuthError("Invalid credentials");
 
-    const role = await userRepository.findRole(user.id);
-   
+    const role = await userRepository.findRole(user.role_id);
+    
     const token = signToken({
       id: user.id,
       email: user.email,

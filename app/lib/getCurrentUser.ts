@@ -3,7 +3,7 @@ export async function getCurrentUser() {
   const token = (await cookies()).get("token")?.value;
 
   if (!token) {
-    return null;
+    return null; 
   }
 
   const res = await fetch(`${process.env.APP_URL}/api/auth/me`, {

@@ -232,7 +232,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
           <div className="mb-3">
             <label htmlFor="license_expiry" className="form-label">Organization license expiry</label>
             <input type="text" readOnly={true}  className="form-control" id="license_expiry"
-            defaultValue={form.license_expiry.split('T')[0]}  
+            defaultValue={form.license_expiry?.split('T')[0]}  
               placeholder="Enter license_expiry"/>
           </div>
          </div>

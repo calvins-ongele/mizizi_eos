@@ -144,8 +144,8 @@ export default function CreateUserModal({ enquiry, onClose, onSave }: editModalP
                     />
                 </div>
                 <div className="col-md-6">
-                    <label htmlFor="lastName" className="form-label">Phone Number <span className="text-danger">*</span></label>
-                    <input type="text" className="form-control" id="lastName" placeholder="Enter phone number" 
+                    <label htmlFor="PhoneNumber" className="form-label">Phone Number <span className="text-danger">*</span></label>
+                    <input type="tel" className="form-control" id="PhoneNumber" placeholder="Enter phone number" 
                     defaultValue={user.phone}
                     onChange={(e)=>setUser((prev) => ({ ...prev, phone: e.target.value }))}
                     />

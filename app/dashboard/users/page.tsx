@@ -147,7 +147,7 @@ export default function CustomersPage() {
                                       e.stopPropagation();
           
                                       const result = await Swal.fire({
-                                        title: "Delete Customer?",
+                                        title: "Delete User?",
                                         text: `Delete "${row.name}"? This cannot be undone.`,
                                         icon: "warning",
                                         showCancelButton: true,

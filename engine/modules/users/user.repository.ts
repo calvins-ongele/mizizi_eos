@@ -107,8 +107,8 @@ class UserRepository extends BaseModel<User> {
   }
 
   async deleteUser(id:number) {
-    const deleted = await db.delete("users", "id", [id]);
-    return deleted;
+    const deleted = await db.delete("users", "id = ? ", [id]);
+    return deleted; 
   }
 
 

@@ -29,8 +29,7 @@ export const coController = {
         });
 
     } catch(error) {
-        const co = await coRepository.find(1);  
-        console.log("Error Fetching Company:::::::::::::::::::::::::", error);
+        const co = await coRepository.find(1);   
         return ok({
           id: co?.id,
           name: co?.name,

@@ -41,7 +41,7 @@ async function update(
   values: Record<string, any>,
   where: string,
   params: any[] = []
-) {
+) { 
   const sets = Object.keys(values)
     .map((c) => `${c} = ?`)
     .join(", ");

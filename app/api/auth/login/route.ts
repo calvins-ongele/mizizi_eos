@@ -1,7 +1,6 @@
 import { userController } from "@/engine/modules/users/user.controller";
 import { fail } from "@/engine/core/http/responses";
-import { cookies } from "next/headers";
-import { redirect } from "next/dist/server/api-utils";
+import { cookies } from "next/headers"; 
 
 export async function POST(req: Request) { 
   try {

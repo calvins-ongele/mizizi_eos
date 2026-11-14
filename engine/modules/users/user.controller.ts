@@ -38,7 +38,7 @@ export const userController = {
     const user = await userRepository.findUser(`${auth.id ?? ''}`, auth.user_company_id??''); 
     const role = await userRepository.findRole(Number(user!.role_id)); 
 
-    return ok({
+    return ok({ 
       id: user?.id,
       name: user?.name,
       email: user?.email,

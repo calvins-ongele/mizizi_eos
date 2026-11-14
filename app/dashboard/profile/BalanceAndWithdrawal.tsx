@@ -5,8 +5,7 @@ import useSWR from "swr";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 export default function BalanceAndWithdrawal() {
-  
-
+   
     
   const { data, mutate, isLoading } = useSWR(
     `/api/pos/account-balance`,
@@ -32,11 +31,11 @@ async function launchBrowser(url:string) {
     return (
         <>
          <div className=" gx-4 justify-content-center mb-5">
-            {!data.success && (
+            {data.success && (
                 <div className="alert alert-danger" >{data?.message??''}</div>
             )}
 
-            {data.success && (
+            {!data.success && (
             <section>
                 <div className="mb-5 container d-flex justify-content-center align-items-center vh-100x">
                     <div className="rounded-circle bg-success text-white d-flex justify-content-center align-items-center shadow" style={{width: "150px", height: "150px"}}>

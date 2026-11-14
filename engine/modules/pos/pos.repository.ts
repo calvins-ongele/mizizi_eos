@@ -79,7 +79,7 @@ class PosRepository extends BaseModel<any> {
 
 
     }
-
+ 
     return saving; 
   }
 
@@ -130,11 +130,14 @@ class PosRepository extends BaseModel<any> {
     const org:OrganizationType = await db.organizationData({uuid: companyId});  
     const assigned_data:AssignedData = JSON.parse( String(org?.assigned_data || "[]") );
     
+    try {
+      
+    
     const send = await fetch(`${process.env.POS_MIZIZI_API}/request-balance`, {
       method:"POST",
       body:JSON.stringify({
         account_uid:org.uuid,
-        account: assigned_data.account_no,
+        account: assigned_data.account_no, 
         user:org.mizizi_user_id
       })
     });
@@ -146,6 +149,10 @@ class PosRepository extends BaseModel<any> {
     }
 
     return ok({message:result.msg ?? 0, login_id:result.login_id});
+
+    } catch (error) {
+      return fail(new Error("Something went wrong while fetching balance."));
+    }
 
   }
   async sendSTK(data:{uid:string, mode_of_payment:'Mpesa_STK'|'Cash'|'Mpesa_Paybill'|'Card', cartValue:number, sale_id:number, receipt_no:string ,
